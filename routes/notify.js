@@ -1,22 +1,14 @@
 import { Router } from "express"
 import TelegramBot from "node-telegram-bot-api"
-import { findClientBySecret } from "../helpers/index.js"
+import { validateClient } from "../middleware/validateClient.js"
 
 const router = Router()
 
+router.use(validateClient)
 router.post("/", async (req, res) => {
     try {
-        const secret = req.headers["x-client-secret"]
-        if (!secret) {
-            return res.status(400).json({ error: "Missing client secret" })
-        }
-
         const { message } = req.body
-        const client = await findClientBySecret(secret)
-
-        if (!message) {
-            return res.status(400).json({ error: "Missing message" })
-        }
+        const client = req.client
 
         const bot = new TelegramBot(client.TOKEN, { polling: false })
         await bot.sendMessage(client.CHAT_ID, message)
