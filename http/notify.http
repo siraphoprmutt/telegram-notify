@@ -1,0 +1,11 @@
+### Notify Telegram
+@apiUrl = http://localhost:8080
+@client_secret = xxx
+
+POST {{apiUrl}}/api/notify HTTP/1.1
+x-client-secret: {{client_secret}}
+Content-Type: application/json
+
+{
+  "message": "ทดสอบ"
+}

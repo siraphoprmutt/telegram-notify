@@ -1,3 +1,6 @@
+import { configDotenv } from "dotenv"
+configDotenv()
+
 export default {
     clientSecret: process.env.CLIENT_SECRET,
     chatId: process.env.CHAT_ID,
